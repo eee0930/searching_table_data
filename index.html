@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <h1>2. 검색이 필요해</h1>
+  <h1>검색이 필요해</h1>
   <hr>
 
   <main>
@@ -23,7 +23,7 @@
 
   <a href="../index.html" class="back-link">&#8592; 뒤로가기</a>
   <script>
-    fetch('/assets/data/data2.json')
+    fetch('/assets/data/data.json')
       .then(res => res.json())
       .then(data => {
         const renderTable = (data) => {
