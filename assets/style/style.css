@@ -1,0 +1,74 @@
+/* 본 파일은 절대로 수정하지 않습니다. */
+* {
+  box-sizing: border-box;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+thead {font-weight: 600;}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.highlight {
+  background-color: yellow;
+}
+
+.back-link {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+  margin-top: 30px;
+  padding: 10px 15px;
+  border: 2px solid #333;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.back-link:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.top-btn {
+  border: none;
+  display: none;
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  padding: 10px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: rgb(203, 68, 91);
+  color: rgb(255, 203, 212);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.jsAction {
+  cursor: pointer;
+}
+
+.sort-check-box-container {
+  margin-bottom: 1.5rem;
+}
+
+td.sortby {
+  cursor: pointer;
+}
