@@ -52,18 +52,6 @@ class Highlight {
       this.query.slice(0, this.query.length - i));
     return queries;
   }
-
-  setTarget = ($target) => {
-    this.$target = $target;
-  }
-
-  setSearchResult = (searchResult) => {
-    this.searchResult = searchResult;
-  }
-
-  setQuery = (query) => {
-    this.query = query.toLowerCase();
-  }
 }
 
 export default Highlight;
