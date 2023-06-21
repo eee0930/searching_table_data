@@ -1,69 +1,68 @@
-import Highlight from "./Highlight.js";
 class SearchHistory {
-    constructor({ $target, dataList }) {
-        this.$target = $target;
-        this.dataList = dataList;
-        this.nowDataList = [];
-    }
+  constructor({ $target, dataList, keys }) {
+    this.$target = $target;
+    this.dataList = dataList;
+    this.keys = keys;
+    this.searchResult = [];
+    this.query = "";
+  }
 
-    render = (searchResult) => {
-        const $table = document.createElement('table');
-        const rows = searchResult.map(element => {
-            const row = document.createElement('tr')
-            const idCell = document.createElement('td')
-            idCell.textContent = element.id
-            row.appendChild(idCell)
+  render = () => {
+    this.settingSearchHistory();
+    const $table = createElement("table");
+    new Set(this.searchResult).forEach(result => {
+      const $tr = createElement("tr");
+      Object.values(result).map(value => {
+        const $td = createElement("td");
+        $td.innerText = value;
+        $tr.appendChild($td);
+      });
+      $table.appendChild($tr);
+    });
+    this.$target.appendChild($table);
+  }
 
-            const photographerCell = document.createElement('td')
-            photographerCell.textContent = element.photographer
-            row.appendChild(photographerCell)
-
-            const introCell = document.createElement('td')
-            introCell.textContent = element.introduction
-            row.appendChild(introCell)
-
-            return row
-        })
-
-        rows.forEach(row => {
-            $table.appendChild(row)
-        });
-
-        this.$target.appendChild($table);
-    }
-    settingSearchResult = (query) => {
-        query = query.toLowerCase();
-        removeChildren(this.$target);
-        const searchResult = [];
-        for(let i = 0; i < this.dataList.length; i++) {
-            if(this.dataList[i].photographer.toLowerCase().includes(query) || 
-            this.dataList[i].introduction.toLowerCase().includes(query)) {
-                const highlight = new Highlight({
-                    query, 
-                    data: this.dataList[i],
-                });
-                // const repaintData = highlight.settingHighlight();
-                // searchResult.push(repaintData);
-                searchResult.push(this.dataList[i]);
-            };
+  settingSearchHistory = () => {
+    this.removeChildrenByEle(this.$target);
+    this.searchResult = [];
+    this.dataList.map((data) => {
+      for(let i = 0; i < this.keys.length; i++) {
+        const para = data[this.keys[i]].toLowerCase();
+        if(para.includes(this.query)) {
+          this.searchResult.push(data);
+          break;
         }
-        this.render(searchResult);
-        this.nowDataList = searchResult;
-    }
+      }
+    });
+  }
 
-    getNowDataList = () => {
-        return this.nowDataList;
-    }
+  setQuery = (query) => {
+    this.query = query.toLowerCase();
+  }
 
-    setNowDataList = (dataList) => {
-        this.nowDataList = dataList;
+  getSearchResult = () => {
+    return this.searchResult;
+  }
+
+  removeChildrenByEle = ($ele) => {
+    while($ele.firstChild) {
+      $ele.removeChild($ele.firstChild);
     }
+  }
+  
 }
 
-const removeChildren = ($ele) => {
-    while($ele.firstChild) {
-        $ele.removeChild($ele.firstChild);
+
+const createElement = (ele, className) => {
+  const $ele = document.createElement(ele);
+  if(className) {
+    if(typeof className === "string") {
+      $ele.classList.add(className);
+    } else {
+      $ele.className = `${className.join(" ")}`
     }
+  }
+  return $ele;
 }
 
 export default SearchHistory;
