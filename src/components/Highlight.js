@@ -3,31 +3,31 @@ class Highlight {
     this.$target = $target;
     this.styleKey = styleKey;
     this.query = query;
-    this.highlight = "";
     this.queries = [];
     this.settingHighlight();
   }
 
   render = () => {
-    const queries = this.settingHighlight();
     const $trs = this.$target.querySelectorAll("tr");
     Array.from($trs).map($tr => {
       const $tds = Array.from($tr.querySelectorAll("td")).slice(1);
       $tds.map($td => {
         const text = $td.innerText;
-        const newText = this.renderHighlightText(text, queries);
+        const newText = this.renderHighlightText(text, this.queries);
         $td.innerHTML = newText;
       })
     });
   }
 
   renderHighlightText = (text, queries) => {
+    const [tagName, className] = this.styleKey;
     let newText = text;
     text = text.toLowerCase(); 
     let idx = text.length - 1;
     while(idx > 0) {
       for(let i = 0; i < queries.length; i++) {
         const query = queries[i];
+        const highlight = `<${tagName} class="${className}">${query}</${tagName}>`;
         const lastIdx = text.lastIndexOf(query.toLowerCase(), idx);
         if(lastIdx === -1) {
           if(i === queries.length - 1) {
@@ -38,7 +38,7 @@ class Highlight {
         } else {
           idx = lastIdx - 1;
           newText = newText.slice(0, lastIdx)
-            + this.highlight 
+            + highlight 
             + newText.slice(lastIdx + query.length);
           break;
         }
@@ -48,8 +48,6 @@ class Highlight {
   }
 
   settingHighlight = () => {
-    const [tagName, className] = this.styleKey;
-    this.highlight = `<${tagName} class="${className}">${this.query}</${tagName}>`;
     this.queries = Array.from(new Array(this.query.length), (_, i) => 
       this.query.slice(0, this.query.length - i));
   }
