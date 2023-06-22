@@ -27,8 +27,8 @@ class App {
 
   settingAppResult = (query) => {
     if(query.length > 0) {
-      const searchResult = this.settingSearchHistory(query);
-      this.settingHighlight(query, searchResult);
+      this.settingSearchHistory(query);
+      this.settingHighlight(query);
       this.$section.style.display = "none";
     } else {
       this.removeChildren(this.$searchHistory);
@@ -44,21 +44,18 @@ class App {
   settingSearchHistory = (query) => {
     this.searchHistory.setQuery(query);
     this.searchHistory.render();
-    return this.searchHistory.getSearchResult();
   }
 
   /**
    * from Highlight
    * @param {string} query 
-   * @param {object[]} searchResult 
    */
-  settingHighlight = (query, searchResult) => {
+  settingHighlight = (query) => {
     const $table = this.$target.querySelector("table");
     this.highlight = new Highlight({
       $target: $table,
       styleKey: ["span", HIGHLIGHT],
       query,
-      searchResult
     });
     this.highlight.render();
   }

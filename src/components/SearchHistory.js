@@ -40,10 +40,6 @@ class SearchHistory {
     this.query = query.toLowerCase();
   }
 
-  getSearchResult = () => {
-    return this.searchResult;
-  }
-
   removeChildrenByEle = ($ele) => {
     while($ele.firstChild) {
       $ele.removeChild($ele.firstChild);
